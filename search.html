@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>LibreTV 搜索页面</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 2em;
+    }
+    input[type="text"] {
+      width: 300px;
+      padding: 0.5em;
+      font-size: 1em;
+    }
+    button {
+      padding: 0.5em 1em;
+      font-size: 1em;
+    }
+  </style>
+</head>
+<body>
+  <h1>LibreTV 搜索</h1>
+  <form id="searchForm">
+    <input type="text" id="searchInput" placeholder="输入搜索关键词" />
+    <button type="submit">搜索</button>
+  </form>
+
+  <script>
+    // 解析 URL 参数中的 search 值
+    function getSearchQuery() {
+      const params = new URLSearchParams(window.location.search);
+      return params.get('search') || '';
+    }
+
+    // 执行搜索操作
+    function performSearch(query) {
+      if (!query) return;
+      // 这里可以根据 LibreTV 的实际搜索实现方式进行调整
+      // 例如，调用 LibreTV 的搜索 API 或更新页面内容
+      console.log('执行搜索：', query);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const searchInput = document.getElementById('searchInput');
+      const searchForm = document.getElementById('searchForm');
+
+      // 获取 URL 中的 search 参数，并设置输入框的值
+      const query = getSearchQuery();
+      searchInput.value = query;
+
+      // 如果有搜索关键词，执行搜索
+      if (query) {
+        performSearch(query);
+      }
+
+      // 监听表单提交事件
+      searchForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const newQuery = searchInput.value.trim();
+        if (newQuery) {
+          // 更新 URL，并执行搜索
+          const encodedQuery = encodeURIComponent(newQuery);
+          window.location.search = `?search=${encodedQuery}`;
+        }
+      });
+    });
+  </script>
+</body>
+</html>
